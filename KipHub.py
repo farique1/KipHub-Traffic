@@ -9,8 +9,8 @@ import requests
 from datetime import datetime, timedelta
 
 # Credentials
-username = 'farique1'
-token = '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'
+username = ''
+token = ''
 
 # Paths
 base_url = 'https://api.github.com/repos'
