@@ -21,7 +21,7 @@ views_url = 'traffic/views'
 clones_url = 'traffic/clones'
 repos_url = 'https://api.github.com/user/repos'
 rate_url = 'https://api.github.com/rate_limit'
-data_file = 'JSONs/traffic.json'
+data_file = f'JSONs/{username}.json'
 
 # Accepted date format
 match_date = r'^((\d{1,4}-)?\d{1,2}-)?\d{1,2}$'
@@ -69,7 +69,7 @@ def dateEntry(date_entry, date_type):
             date_entry = f'{datetime.now().strftime("%Y")}-{date_entry}'
         year = date_entry.split('-')[0]
         if data_format == 2 and len(year) < 4:
-            date_entry = '2000'[0:(4-len(year))] + date_entry
+            date_entry = '2000'[0:(4 - len(year))] + date_entry
 
         try:
             date_entry = datetime.strptime(date_entry, '%Y-%m-%d')
@@ -147,8 +147,16 @@ def getAPIdata(url, file=None, use_cache=use_cache):
     if not use_cache:
         print(f'Fetching {url}')
         response = json.loads(gh_session.get(url).text)
+        if type(response) is dict:
+            message = response.get('message', None)
+            if message:
+                print('\nAPI error\n')
+                for key in response:
+                    print(f'{key}: {response[key]}')
+                print(f'\n{response}\n')
+                raise SystemExit(0)
         if file and keep_cache:
-            print(f'Saving {file}')            
+            print(f'Saving {file}')
             with open(file, 'w') as f:
                 json.dump(response, f, indent=4)
     else:
@@ -170,7 +178,7 @@ def gatherData(traffic_data):
         '''Read and format the repository information from views or clones
            data_type = if 'views' or 'clones' '''
         data = getAPIdata(f'{base_url}/{user_url}/{repo_name}/traffic/{data_type}',
-                           f'JSONs/{repo_name}_{data_type}.json')
+                          f'JSONs/{repo_name}_{data_type}.json')
         data_dict = {}
         data_dict['count'] = data['count']
         data_dict['uniques'] = data['uniques']
@@ -188,14 +196,16 @@ def gatherData(traffic_data):
         data_dict['days'] = days_dict
         return data_dict
 
-    # Previous repos name and index dictionary
-    # finds their existence and place on the list
+    if view_only:
+        return traffic_data
+
+    # Finds previous repo names and indexes them
     repos_dict = {}
     for count, repo in enumerate(traffic_data):
         repos_dict[repo['name']] = count
 
     repos = getAPIdata(repos_url, 'JSONs/repos.json')
-    repo_names = [(repo['name']) for repo in repos]
+    repo_names = [(repo['name']) for repo in repos if repo['owner']['login'] == username]
     for repo_name in repo_names:
         repo_index = None
         if repo_name in repos_dict:
@@ -252,10 +262,9 @@ def showData(traffic_data, min_cust, max_cust):
                 max_day = max(max_day, max_tmp)
         return min_day, max_day
 
-
     def showViewClone(data_type):
         '''Assemble and shows the data for the views and the clones
-           data_type = if 'views' or 'clones' ''' 
+           data_type = if 'views' or 'clones' '''
         def showContUnique(data_pos, title):
             '''Assemble and shows the data for count and uniques
                data_pos = the position of count and uniques on the list
@@ -275,7 +284,6 @@ def showData(traffic_data, min_cust, max_cust):
                     print('   ', end='')
             print(f' {total}')
 
-
         if repo[data_type]['count'] > 0 or repo[data_type]['uniques'] > 0:
             print(f'{data_type.capitalize()}: '
                   f'{repo[data_type]["count"]} '
@@ -287,7 +295,6 @@ def showData(traffic_data, min_cust, max_cust):
             print(' Sum')
             showContUnique(0, ' Cnt: ')
             showContUnique(1, ' Unq: ')
-
 
     # Set Starting and ending days as the last day updated
     min_day = max_day = datetime.strptime(traffic_data[0]["updated"], '%Y-%m-%d')
@@ -306,11 +313,11 @@ def showData(traffic_data, min_cust, max_cust):
     print(f'{username} has {len(traffic_data)} GitHub repositories')
     print(f'Updated in {traffic_data[0]["updated"]}')
     traffic_data = sorted(traffic_data,
-                          key = lambda i: (i[sort_name].lower(),
-                                           i[sort_1st][sort_3rd],
-                                           i[sort_1st][sort_4th],
-                                           i[sort_2nd][sort_3rd],
-                                           i[sort_2nd][sort_4th]),
+                          key=lambda i: (i[sort_name].lower(),
+                                         i[sort_1st][sort_3rd],
+                                         i[sort_1st][sort_4th],
+                                         i[sort_2nd][sort_3rd],
+                                         i[sort_2nd][sort_4th]),
                           reverse=sort_reverse)
     for repo in traffic_data:
         print()
@@ -339,9 +346,7 @@ gh_session.auth = (username, token)
 
 traffic_in = loadData(data_file)
 
-traffic_out = traffic_in
-if not view_only:
-    traffic_out = gatherData(traffic_in)
+traffic_out = gatherData(traffic_in)
 
 saveData(data_file, traffic_out)
 
