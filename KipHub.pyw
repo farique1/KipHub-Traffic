@@ -36,8 +36,8 @@ except ModuleNotFoundError:
 
 # Command line variables
 # Credentials
-username = 'farique1'
-token = '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'
+username = ''
+token = ''
 # User
 use_cache = False  # If True get API data from disk
 keep_cache = False  # Keep local API response copies
