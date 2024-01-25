@@ -22,7 +22,7 @@ This is where you download updated GitHub data whenever you need.
 > Remember, the whole purpose of this program is to keep track of the data past the 14 days maximum on the GitHub page, so always fetch the data on intervals shorter than this period.  
   
 ### The interface  
-![Interface](images\interface.png)  
+![Interface](images/interface.png)  
   
 The interface is composed of a menu bar, a header, a repository body and footer.  
 
@@ -34,7 +34,7 @@ The `Settings` menu is where you can enter a new token for the user (creating ex
 In the `Info` menu you have information about KeepHub Traffic, a help window and you can display statistics about the repositories regarding the current period.  
 The statistic window show the most hits on a day and the average daily hits for each category (View All, View Uniques, Clones All, Clones Uniques) in the current period. It also show compiled information regarding all repositories. `Average average` show the average for all days averages and `Sum average` shows the sum of all hits averaged for the period. You can call several statistic windows for different periods for comparison.  
   
-![Statistics window](images\statistics.png)   
+![Statistics window](images/statistics.png)   
 
 #### The Header  
 The header shows the username, the amount of repositories under that user, the last date the data was updated, how many days ago was the update (remember, after 14 days you start to lose data. the program will highlight this number in yellow and then in red to warn about the deadline), the first day of the shown data, the last day of the period and how many days are being shown.  
@@ -54,7 +54,7 @@ GitHub provides information in two ways, a daily report detailing numbers for ea
 The daily collect data is color coded, View All is blue, View Uniques is orange, Clones All is green and Clones Uniques is red. You can click on each color to toggle each graphic view on the plot.  
 The plot can be manipulated in a number of ways. It can be dragged in all directions, can be zoomed in or out with the mouse wheel (placing the mouse on the X or Y labels while zooming will affect only this axis), double click will reset the view and the right mouse button can be used to drag a region to zoom or to call a menu with several options.  
   
-![Boards](images\boards.gif)  
+![Boards](images/boards.gif)  
   
 #### The Footer
 The footer is mostly about configuring the viewing of the information. There are combo boxes to change all boards to a certain type, a combo box with several options to sort the repositories (there is an entry to `Revert` the sorts), toggles for all four graphics that affects all repositories, button to configure the plots where you can change the intensity of the graphics fill, the height of the plots and if you want to see the dates on the X axis. There is also a filter box where you can enter text to filter which repositories are shown. A box next to it have all repository names as a shortcut for the filter and there is a button to clear the filter box.  
