@@ -67,7 +67,8 @@ A multi user version might come in the future.
 
 ## KipHub Traffic Command Line  
 This is now the real simple one.  
-> You can use the 2.0 GUI version with a `-g` argument or just use the 1.2 version.
+
+Run KipHub Traffic with a `-g` among the arguments to use the command line.  
 
 KipHub Traffic Command Line uses no external dependencies and no servers, you just have to run it once every fourteen days and you are done. It even manages to produce a passable visual representation of the data with lots of options.  
   
