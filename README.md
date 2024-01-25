@@ -7,7 +7,7 @@ There are a lot of similar tools out there but all of them seemed a bit overwork
   
 KipHub Traffic uses the GitHub API to recover traffic data from your repositories, saves them locally, bypassing the 14 days limit, and displays them on a pleasing and more useful way.  
   
-> KipHub Traffic still supports [command line](#KipHub_Traffic_Command_Line) operation only without needing Dear PyGui.   
+> KipHub Traffic still supports [command line](#kiphub-traffic-command-line) operation only without needing Dear PyGui.   
   
 ## KipHub Traffic GUI  
 ### Getting started
