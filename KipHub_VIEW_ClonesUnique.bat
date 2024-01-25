@@ -1,2 +1,2 @@
-python kiphub.py -tvoldrp
+python kiphub.pyw -tvold -g
 pause

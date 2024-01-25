@@ -1,2 +1,2 @@
-python kiphub.py -rp
+python kiphub.pyw -g
 pause

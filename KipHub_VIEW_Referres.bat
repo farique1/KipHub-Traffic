@@ -1,2 +1,2 @@
-python kiphub.py -tedsp
+python kiphub.pyw -treds -g
 pause
