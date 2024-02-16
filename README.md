@@ -1,6 +1,6 @@
   
 # KipHub Traffic  
-*v2.0*  
+*v2.1*  
 
 My take on the "GitHub doesn't save more than 14 days of traffic data" problem.    
 There are a lot of similar tools out there but all of them seemed a bit overworked for my taste so I ~~took the usual approach and~~ made ~~a simpler~~ one with chicken wire and bubble gum. 
