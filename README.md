@@ -44,7 +44,8 @@ You can change the initial and final dates by clicking on their labels (they can
 Clicking in the days period will bring some options:  
 `Disabled` will turn on or of the enforcing of how many days are shown. If the period is enabled (unchecked) the current period of days entered will almost always be enforced (some actions might disable or enable this without notification).  
 `Last day` will take the ending date to the last date available.  
-The slider under `Last day` will set the desired period to show (this will only take effect when the period is enabled). Control/Command clicking this allows for manual entry.  
+The slider under `Last day` will set the desired period to show (this will only take effect when the period is enabled). Click-drag left or right to change. Control/Command clicking or double click this allows for manual entry. Holding SHIFT/ALT will speed/slow the drag.  
+`14 days`, `30 days`, `90 days` shows the last 14, 30 or 90 days respectively.  
 `All days` takes the initial and final date to the earliest and latest available dates on the data, showing all available days at once.  
   
 #### The Body

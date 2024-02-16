@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
 # KipHub Traffic
-# v2.0 2024-1-2
+# v2.1 2024-1-2
 # Fred Rique (Farique) (c) 2021 - 2024
 # www.github.com/farique1/kiphub-traffic
 
 # Known Bugs:
 # Plots not always update if not visible so they are always reconstructed.
 # Popups appear at the top left of the screen when first called.
-# Adding a tooltip here to describe an entry on a table messes with the table sort routine.
+# Adding a tooltip to describe an entry on a table messes with the table sort routine.
 #    tooltips.append(dpg.add_tooltip(dpg.last_item()))
 #    dpg.add_text(parent=dpg.last_item(), default_value='Average of all repos average')
 
@@ -36,8 +36,8 @@ except ModuleNotFoundError:
 
 # Command line variables
 # Credentials
-username = ''
-token = ''
+username = 'farique1'
+token = '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'
 # User
 use_cache = False  # If True get API data from disk
 keep_cache = False  # Keep local API response copies
@@ -1424,6 +1424,14 @@ def showGUIOutput():
 
         apply_dates(output_head.earliest_day, output_head.date_to)
 
+    def set_days(sender, app_data, user_data):
+        config.disable_days = False
+        dpg.configure_item('toggle_days', default_value=config.disable_days)
+
+        config.date_days = user_data
+
+        apply_dates(output_head.earliest_day, output_head.date_to)
+
     def all_days():
         global config
 
@@ -2370,10 +2378,13 @@ def showGUIOutput():
                             bt_work.append(dpg.add_button(width=60, tag='date_days'))
                             with dpg.popup(dpg.last_item(), mousebutton=dpg.mvMouseButton_Left, tag="popup_days"):
                                 bt_work.append(dpg.add_checkbox(label='Disabled', default_value=disable_days, tag='toggle_days', callback=toggle_days))
-                                bt_work.append(dpg.add_button(label='Last day', width=200, callback=last_day, tag='last_day'))
-                                bt_work.append(dpg.add_slider_int(width=200, min_value=2, max_value=365, tag='set_days'))
+                                bt_work.append(dpg.add_button(label='Last day', width=100, callback=last_day, tag='last_day'))
+                                bt_work.append(dpg.add_drag_int(width=100, min_value=2, max_value=365, format='%d (drag)', tag='set_days'))
                                 dpg.bind_item_handler_registry(dpg.last_item(), 'release_handler')
-                                bt_work.append(dpg.add_button(label='All days', width=200, callback=all_days, tag='all_days'))
+                                bt_work.append(dpg.add_button(label='14 days', width=100, user_data=14, callback=set_days, tag='14_days'))
+                                bt_work.append(dpg.add_button(label='30 days', width=100, user_data=30, callback=set_days, tag='30_days'))
+                                bt_work.append(dpg.add_button(label='90 days', width=100, user_data=90, callback=set_days, tag='90_days'))
+                                bt_work.append(dpg.add_button(label='All days', width=100, callback=all_days, tag='all_days'))
                     dpg.add_button(width=-1, height=56)
 
             dpg.add_child_window(height=10)
@@ -2498,7 +2509,13 @@ def showGUIOutput():
     tooltips.append(dpg.add_tooltip('last_day'))
     dpg.add_text(parent=dpg.last_item(), default_value='Go to the last day on the data')
     tooltips.append(dpg.add_tooltip('set_days'))
-    dpg.add_text(parent=dpg.last_item(), default_value='Enter the amount of days to show\nCTRL+CLICK for manual entry')
+    dpg.add_text(parent=dpg.last_item(), default_value='Amount of days to show\nClick-drag to change\nCTRL+click or double click for manual entry\nHold SHIFT/ALT to go faster/slower')
+    tooltips.append(dpg.add_tooltip('14_days'))
+    dpg.add_text(parent=dpg.last_item(), default_value='Show the last 14 days')
+    tooltips.append(dpg.add_tooltip('30_days'))
+    dpg.add_text(parent=dpg.last_item(), default_value='Show the last 30 days')
+    tooltips.append(dpg.add_tooltip('90_days'))
+    dpg.add_text(parent=dpg.last_item(), default_value='Show the last 90 days')
     tooltips.append(dpg.add_tooltip('all_days'))
     dpg.add_text(parent=dpg.last_item(), default_value='Show all days available on the data')
     tooltips.append(dpg.add_tooltip('board_type'))
@@ -2623,9 +2640,7 @@ def main():
     if args.gui:
         if not dpg_module:
             print(f'{RED}Dear PyGui module not installed.')
-            print(f'{YELLOW}Instal the Dear PyGui module;')
-            print(f'run KipHub Traffic with {GREEN}-g{YELLOW};')
-            print(f'or run KipHub Traffic v1.2 ({GREEN}kiphub.py{YELLOW}).{RESET}')
+            print(f'{YELLOW}Instal the Dear PyGui module or run KipHub Traffic with {GREEN}-g{RESET}')
             raise SystemExit(0)
         else:
             showGUIOutput()

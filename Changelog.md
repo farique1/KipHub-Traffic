@@ -1,5 +1,10 @@
 # KipHub Traffic  
 
+## **v2.1.0**  
+***16-2-2024***  
+  
+- Changed the days period entry.  
+
 ## **v2.0.0**  
 ***25-1-2024***  
   
